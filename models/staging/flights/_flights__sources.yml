@@ -39,29 +39,6 @@ sources:
             description: Номер посадочного места
           - name: fare_conditions
             description: Условия оплаты
-      - name: flights
-        description: Данные авиарейсов
-        columns:
-          - name: flight_id
-            description: Уникальный технический идентификатор рейса
-          - name: flight_no
-            description: Номер рейса
-          - name: scheduled_departure
-            description: Время вылета по расписанию
-          - name: scheduled_arrival
-            description: Время прилета по расписанию
-          - name: departure_airport
-            description: Аэропорт вылета
-          - name: arrival_airport
-            description: Аэропорт прилета
-          - name: status
-            description: Статус авиарейса
-          - name: aircraft_code
-            description: Код модели самолета
-          - name: actual_departure
-            description: Время вылета фактическое
-          - name: actual_arrival
-            description: Время прилета фактическое
       - name: bookings
         description: Данные по бронированиям
         columns:
