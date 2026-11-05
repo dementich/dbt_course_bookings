@@ -1,0 +1,69 @@
+models:
+  - name: fct_bookings
+    description: Факты бронирований
+    docs:
+      show: true
+      node_color: red
+    latest_version: 1
+    versions:
+      - v: 1
+    config:
+      contract: {enforced: true}
+    meta:
+      owner: "cyril.bulanov@gmail.com"
+      contact_tg: kbulanov
+      status: in_dev
+    columns:
+      - name: book_ref
+        data_type: varchar(8)
+        constraints:
+          - type: not_null
+      - name: book_date
+        data_type: timestamptz
+      - name: total_amount
+        data_type: numeric(10, 2)
+        constraints:
+          - type: check
+            expression: "total_amount >= 0"
+        tests:
+          - not_null
+        meta:
+          owner: finance_team
+        quote: false
+  - name: fct_flights
+  - name: fct_ticket_flights
+    description: Соответствие билетов и авиарейсов
+    config:
+      contract:
+        enforced: true
+    docs:
+      show: true
+      node_color: green
+    meta:
+      owner: "cyril.bulanov@gmail.com"
+    columns:
+      - name: ticket_no
+        data_type: char(13)
+        constraints:
+          - type: not_null
+      - name: flight_id
+        data_type: integer
+      - name: fare_conditions
+        data_type: varchar(10)
+      - name: amount
+        data_type: numeric(10,2)
+        constraints:
+          - type: check
+            expression: "amount >= 0"
+      - name: boarding_pass_exists
+        data_type: integer
+      - name: boarding_no
+        data_type: integer
+      - name: seat_no
+        data_type: varchar(4)
+      - name: load_date
+        data_type: date
+        constraints:
+          - type: check
+            expression: "load_date <= current_date"
+  - name: fct_tickets
