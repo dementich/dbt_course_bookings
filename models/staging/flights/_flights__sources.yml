@@ -4,50 +4,9 @@ sources:
     schema: demo_src
     tables:
       - name: aircrafts
-        description: '{{ doc("aircrafts_description") }}'
-        columns:
-          - name: aircraft_code
-            tests:
-              - not_null
-              - unique
-            description: >
-              Идентификатор модели самолета.
-              Состоит из трех латинских букв.
-          - name: model
-            description: Название модели самолета
-          - name: range
-            description: Максимальная дальность полета
       - name: airports
-        description: Данные аэропортов
-        columns:
-          - name: airport_code
-            description: Международные идентификационный код аэропорта
-          - name: airport_name
-            description: Название аэропорта
-          - name: city
-            description: Город, к которому относится аэропорт
-          - name: coordinates
-            description: Координаты расположения аэропорта
-          - name: timezone
-            description: Временная зона аэропорта
       - name: seats
-        description: Информация по посадочным местам
-        columns:
-          - name: aircraft_code
-            description: Код модели самолета, к которому относится данное посадочное место
-          - name: seat_no
-            description: Номер посадочного места
-          - name: fare_conditions
-            description: Условия оплаты
       - name: bookings
-        description: Данные по бронированиям
-        columns:
-            - name: book_ref
-              description: Номер бронирования
-            - name: book_date
-              description: Дата бронирования
-            - name: total_amount
-              description: Стоимость бронирования
         freshness:
           warn_after:
             count: 60000
@@ -57,3 +16,15 @@ sources:
             period: day
           filter: current_timestamp::date - book_date::date < 3
         loaded_at_field: book_date::timestamp
+      - name: boarding_passes
+      - name: flights
+        freshness:
+          warn_after:
+            count: 1000
+            period: day
+          error_after:
+            count: 5000
+            period: day
+        loaded_at_field: actual_departure
+      - name: ticket_flights
+      - name: tickets
