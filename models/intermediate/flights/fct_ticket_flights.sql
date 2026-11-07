@@ -12,3 +12,9 @@ select  tf.ticket_no
 from    {{ ref('stg_flights__ticket_flights') }} as tf
         left join {{ ref('stg_flights__boarding_passes') }} bp
             on tf.ticket_no = bp.ticket_no and tf.flight_id = bp.flight_id
+where   tf.ticket_no not in (
+            select  ticket_no
+            from    {{ref('stg_flights__tickets')}} t
+                    join {{ref('stg_dict__airline_employee_passengers')}} aep
+                        on t.passenger_id = aep.passenger_id
+        )
